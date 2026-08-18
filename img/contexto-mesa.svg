@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Espaço reservado para foto de contexto">
+  <rect width="600" height="800" fill="#DCD5DE"/>
+  <rect x="90" y="150" width="330" height="440" fill="#F6F4F7"/>
+  <g stroke="#DCD5DE" stroke-width="2">
+    <path d="M130 230h250M130 280h250M130 330h250M130 380h190"/>
+  </g>
+  <path d="M130 190h120" stroke="#A9793F" stroke-width="4"/>
+  <rect x="150" y="480" width="330" height="230" fill="#452A46" opacity="0.9"/>
+  <g font-family="'IBM Plex Mono', ui-monospace, monospace" fill="#F6F4F7">
+    <text x="182" y="560" font-size="18" letter-spacing="3" opacity="0.66">CONTEXTO</text>
+    <text x="182" y="606" font-size="20">Substituir por foto</text>
+    <text x="182" y="636" font-size="20" opacity="0.62">de mesa/documentos</text>
+  </g>
+</svg>
