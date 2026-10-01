@@ -26,7 +26,7 @@ except (AttributeError, ValueError):
     pass
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PAGINAS = ['index.html', 'privacidade.html', 'termos.html', 'obrigado.html', '404.html']
+PAGINAS = ['index.html', 'privacidade.html', 'termos.html', '404.html']
 
 VEDADOS = [
     'causa ganha', 'garantimos', 'garantido', 'garanta', 'aprovação certa',
@@ -42,7 +42,6 @@ PLACEHOLDERS = {
     '00.000': 'número de inscrição na OAB',
     '5592900000000': 'número de WhatsApp',
     '(92) 90000-0000': 'telefone exibido',
-    'COLE-AQUI-A-CHAVE-DO-WEB3FORMS': 'chave do serviço de formulário',
     'Rua Exemplo': 'endereço do escritório',
     '00.000.000/0001-00': 'CNPJ',
     'Instituição, ano': 'formação acadêmica',

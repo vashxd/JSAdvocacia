@@ -6,7 +6,7 @@ Todo dado de exemplo está marcado abaixo. `python scripts/verificar.py` lista o
 
 | Placeholder | Onde aparece | Trocar por |
 |---|---|---|
-| `00.000` | `index.html`, `privacidade.html`, `termos.html`, `obrigado.html`, `404.html`, `scripts/og.html` | Número real de inscrição na OAB/AM |
+| `00.000` | `index.html`, `privacidade.html`, `termos.html`, `404.html`, `scripts/og.html` | Número real de inscrição na OAB/AM |
 | `00.000.000/0001-00` | rodapé de todas as páginas | CNPJ da sociedade unipessoal — **remover a linha inteira se não houver CNPJ** |
 | `Rua Exemplo, 000, sala 00 — Centro, Manaus/AM` | rodapé, seção de contato, JSON-LD, páginas legais | Endereço real. Se não houver endereço fixo, usar apenas `Atendimento mediante agendamento` e remover `streetAddress`/`postalCode` do JSON-LD |
 | `69000-000` | JSON-LD em `index.html` | CEP real |
@@ -34,18 +34,11 @@ Hoje é `Olá, gostaria de tirar uma dúvida jurídica.` (neutra, sem promessa).
 
 ## 3. Formulário
 
-O `<form>` aponta para o [Web3Forms](https://web3forms.com) (gratuito, sem backend).
+O formulário **não envia nada para servidor**: monta a mensagem com nome, assunto e horário e abre o WhatsApp para o visitante enviar. Não há chave, serviço externo nem caixa de e-mail envolvidos.
 
-1. Criar a chave de acesso com o e-mail profissional;
-2. Em `index.html`, substituir `COLE-AQUI-A-CHAVE-DO-WEB3FORMS` pela chave;
-3. Ajustar o campo oculto `redirect` para `https://SEUDOMINIO/obrigado.html`;
-4. Enviar um teste real e confirmar a chegada do e-mail.
+O número de destino está no `action` do `<form>` em `index.html` (`https://wa.me/5592991989111`). Se o número mudar, trocar ali e nos demais links `wa.me`.
 
-Enquanto a chave não for preenchida, o JavaScript deixa o envio nativo acontecer em vez de fingir sucesso — o erro aparece, em vez de sumir.
-
-**Não adicionar campo "descreva seu caso".** A ausência dele é decisão de projeto (LGPD + conflito de interesses), explicada na seção 5.7 do guia e refletida na Política de Privacidade.
-
-O serviço mantém servidores no exterior. A Política de Privacidade já declara a transferência internacional — se trocar de serviço, revisar o item 5 dela.
+**Não adicionar campo "descreva seu caso".** A ausência dele é decisão de projeto (LGPD + conflito de interesses), explicada na seção 5.7 do guia.
 
 ## 4. Fotografia
 

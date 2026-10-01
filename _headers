@@ -5,7 +5,7 @@
   X-Frame-Options: DENY
   Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self' 'unsafe-inline'; form-action 'self' https://api.web3forms.com; connect-src 'self' https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; font-src 'self'; script-src 'self' 'unsafe-inline'; form-action 'self' https://wa.me https://api.whatsapp.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'
 
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable

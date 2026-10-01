@@ -34,118 +34,71 @@
     Array.prototype.forEach.call(aRevelar, function (el) { observador.observe(el); });
   }
 
-  /* --- 3. Botao flutuante some sobre a secao de contato ----------------- */
+  /* --- 3. Botao flutuante ------------------------------------------------ */
+  // So aparece depois que os botoes do hero saem da tela, e some de novo
+  // sobre o contato e o rodape: nunca disputa espaco com outro CTA nem
+  // cobre o aviso do Provimento 205.
   var zap = document.getElementById('zap-flutuante');
-  var contato = document.getElementById('contato');
-  if (zap && contato && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entradas) {
-      zap.dataset.oculto = entradas[0].isIntersecting ? 'true' : 'false';
-    }, { threshold: 0.12 }).observe(contato);
+  var vigiados = [
+    document.querySelector('.timbre .acoes'),
+    document.getElementById('contato'),
+    document.querySelector('.rodape')
+  ].filter(Boolean);
+  if (zap && vigiados.length && 'IntersectionObserver' in window) {
+    var naTela = [];
+    zap.dataset.oculto = 'true';
+    var observadorZap = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (entrada) {
+        var i = naTela.indexOf(entrada.target);
+        if (entrada.isIntersecting && i < 0) { naTela.push(entrada.target); }
+        if (!entrada.isIntersecting && i >= 0) { naTela.splice(i, 1); }
+      });
+      zap.dataset.oculto = naTela.length ? 'true' : 'false';
+    }, { threshold: 0 });
+    vigiados.forEach(function (el) { observadorZap.observe(el); });
   }
 
-  /* --- 4. Formulario ----------------------------------------------------- */
+  /* --- 4. Formulario: monta a mensagem e abre o WhatsApp --------------- */
+  // Nada e enviado a servidor: o visitante revisa a mensagem no proprio
+  // WhatsApp e decide enviar. Sem JS, o GET nativo abre o WhatsApp com a
+  // saudacao padrao.
   var form = document.getElementById('formulario');
   if (!form) { return; }
 
-  var aviso = document.getElementById('aviso-form');
-  var botao = form.querySelector('button[type="submit"]');
-  var textoBotao = botao ? botao.textContent : '';
+  // "Falar sobre este assunto" nos cartoes de area ja deixa o assunto
+  // escolhido no formulario.
+  var assunto = document.getElementById('area');
+  Array.prototype.forEach.call(document.querySelectorAll('.area-link[data-assunto]'), function (link) {
+    link.addEventListener('click', function () {
+      if (assunto) { assunto.value = link.dataset.assunto; }
+    });
+  });
 
-  var mostrarAviso = function (texto) {
-    if (!aviso) { return; }
-    aviso.textContent = texto;
-    aviso.hidden = false;
-  };
+  var campoNome = document.getElementById('campo-nome');
+  var nome = document.getElementById('nome');
+  var erroNome = document.getElementById('erro-nome');
 
-  var definirErro = function (idCampo, idErro, mensagem) {
-    var campo = document.getElementById(idCampo);
-    var erro = document.getElementById(idErro);
-    if (campo) { campo.dataset.invalido = mensagem ? 'true' : 'false'; }
-    if (erro) { erro.textContent = mensagem || ''; }
-  };
-
-  // Aceita telefone (>= 10 digitos) ou e-mail. Sem regex heroica: o objetivo
-  // e pegar erro de digitacao obvio, nao validar o mundo.
-  var contatoValido = function (valor) {
-    var digitos = valor.replace(/\D/g, '');
-    if (digitos.length >= 10 && digitos.length <= 13) { return true; }
-    return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(valor.trim());
-  };
-
-  var validar = function () {
-    var ok = true;
-    var nome = form.elements.nome;
-    var cont = form.elements.contato;
-    var consent = form.elements.consentimento;
-
-    if (!nome.value.trim() || nome.value.trim().length < 2) {
-      definirErro('campo-nome', 'erro-nome', 'Informe o seu nome.');
-      ok = false;
-    } else {
-      definirErro('campo-nome', 'erro-nome', '');
-    }
-
-    if (!contatoValido(cont.value)) {
-      definirErro('campo-contato', 'erro-contato', 'Informe um telefone com DDD ou um e-mail válido.');
-      ok = false;
-    } else {
-      definirErro('campo-contato', 'erro-contato', '');
-    }
-
-    if (!consent.checked) {
-      definirErro('campo-consentimento', 'erro-consentimento', 'É necessário autorizar o contato para enviar.');
-      ok = false;
-    } else {
-      definirErro('campo-consentimento', 'erro-consentimento', '');
-    }
-
+  var validarNome = function () {
+    var ok = nome.value.trim().length >= 2;
+    campoNome.dataset.invalido = ok ? 'false' : 'true';
+    erroNome.textContent = ok ? '' : 'Informe o seu nome.';
     return ok;
   };
 
-  ['nome', 'contato'].forEach(function (nomeCampo) {
-    var campo = form.elements[nomeCampo];
-    if (campo) {
-      campo.addEventListener('blur', function () {
-        if (campo.value.trim()) { validar(); }
-      });
-    }
+  nome.addEventListener('blur', function () {
+    if (nome.value.trim()) { validarNome(); }
   });
 
   form.addEventListener('submit', function (evento) {
-    if (!validar()) {
-      evento.preventDefault();
-      var invalido = form.querySelector('[data-invalido="true"] input');
-      if (invalido) { invalido.focus(); }
-      return;
-    }
-
-    // Chave nao configurada: deixa o POST nativo acontecer para o erro
-    // aparecer no lugar certo, em vez de fingir sucesso.
-    var chave = form.elements.access_key;
-    if (!chave || chave.value.indexOf('COLE-AQUI') === 0) { return; }
-
     evento.preventDefault();
-    if (botao) { botao.disabled = true; botao.textContent = 'Enviando…'; }
+    if (!validarNome()) { nome.focus(); return; }
 
-    fetch(form.action, {
-      method: 'POST',
-      headers: { Accept: 'application/json' },
-      body: new FormData(form)
-    })
-      .then(function (resposta) { return resposta.json(); })
-      .then(function (dados) {
-        if (dados && dados.success) {
-          form.reset();
-          mostrarAviso('Mensagem recebida. Retorno em até um dia útil, no contato informado.');
-        } else {
-          mostrarAviso('Não foi possível enviar agora. Se preferir, fale pelo WhatsApp ou pelo e-mail acima.');
-        }
-      })
-      .catch(function () {
-        mostrarAviso('Não foi possível enviar agora. Se preferir, fale pelo WhatsApp ou pelo e-mail acima.');
-      })
-      .then(function () {
-        if (botao) { botao.disabled = false; botao.textContent = textoBotao; }
-      });
+    var mensagem = 'Olá, meu nome é ' + nome.value.trim() + '.\n' +
+      'Gostaria de conversar sobre: ' + form.querySelector('#area').value + '.\n' +
+      'Melhor horário para conversar: ' + form.querySelector('#horario').value + '.';
+    var url = form.action + '?text=' + encodeURIComponent(mensagem);
+
+    var janela = window.open(url, '_blank');
+    if (janela) { janela.opener = null; } else { window.location.href = url; }
   });
 })();

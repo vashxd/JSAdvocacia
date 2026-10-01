@@ -19,12 +19,11 @@ Qualquer servidor estático serve. Abrir o arquivo direto por `file://` também 
 index.html            landing completa — 7 seções, JSON-LD Attorney + FAQPage
 privacidade.html      Política de Privacidade (LGPD)
 termos.html           Termos de uso + aviso do Provimento 205/2021
-obrigado.html         confirmação de envio do formulário (noindex)
 404.html              página de erro
 
 css/styles.css        folha única, comentada por seção
 css/fonts.css         gerado por scripts/fetch-fonts.sh — não editar à mão
-js/main.js            reveal ao rolar, estado do header, validação do formulário
+js/main.js            reveal ao rolar, estado do header, formulário que abre o WhatsApp
 fonts/                Fraunces, Instrument Sans, IBM Plex Mono (woff2, 240 KB)
 img/                  retrato e foto de contexto (placeholders SVG), OG, ícone
 scripts/              utilitários de manutenção
@@ -56,9 +55,11 @@ robots.txt sitemap.xml favicon.svg
 
 ## Deploy
 
+**Ao alterar `css/styles.css` ou `js/main.js`, aumentar o `?v=N`** nos `<link>`/`<script>` de todas as páginas. O `_headers` manda o navegador guardar esses arquivos por 7 dias; sem trocar a versão, quem já visitou continua com o arquivo antigo.
+
 Cloudflare Pages ou Netlify, apontando para a raiz do repositório, **sem comando de build**. `_headers` é lido automaticamente pelos dois (CSP, HSTS, cache imutável para as fontes).
 
-Se hospedar em outro lugar, replicar os cabeçalhos de `_headers` na configuração do servidor. A CSP libera exatamente `self` mais `api.web3forms.com` — qualquer script de terceiro precisa ser adicionado lá.
+Se hospedar em outro lugar, replicar os cabeçalhos de `_headers` na configuração do servidor. A CSP libera apenas `self` (e `wa.me` como destino do formulário) — qualquer script de terceiro precisa ser adicionado lá.
 
 ## O que ficou fora, de propósito
 
