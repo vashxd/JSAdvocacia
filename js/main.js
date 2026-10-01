@@ -18,6 +18,43 @@
     window.addEventListener('scroll', marcarRolagem, { passive: true });
   }
 
+  /* --- 1b. Menu do mobile ------------------------------------------------ */
+  var menuBotao = document.querySelector('.menu-botao');
+  var menu = document.getElementById('menu');
+  if (cabecalho && menuBotao && menu) {
+    var menuTexto = menuBotao.querySelector('.menu-texto');
+    var definirMenu = function (aberto) {
+      cabecalho.dataset.menu = aberto ? 'aberto' : 'fechado';
+      menuBotao.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      if (menuTexto) { menuTexto.textContent = aberto ? 'Fechar' : 'Menu'; }
+    };
+    definirMenu(false);
+
+    menuBotao.addEventListener('click', function () {
+      definirMenu(cabecalho.dataset.menu !== 'aberto');
+    });
+    // Escolher um destino fecha o menu.
+    menu.addEventListener('click', function (evento) {
+      if (evento.target.closest('a')) { definirMenu(false); }
+    });
+    document.addEventListener('keydown', function (evento) {
+      if (evento.key === 'Escape' && cabecalho.dataset.menu === 'aberto') {
+        definirMenu(false);
+        menuBotao.focus();
+      }
+    });
+    document.addEventListener('click', function (evento) {
+      if (cabecalho.dataset.menu === 'aberto' && !cabecalho.contains(evento.target)) {
+        definirMenu(false);
+      }
+    });
+    // Voltando para o layout de desktop, o painel nao pode ficar preso aberto.
+    var desktop = window.matchMedia('(min-width: 861px)');
+    var aoMudar = function () { if (desktop.matches) { definirMenu(false); } };
+    if (desktop.addEventListener) { desktop.addEventListener('change', aoMudar); }
+    else if (desktop.addListener) { desktop.addListener(aoMudar); } // Safari < 14
+  }
+
   /* --- 2. Revelacao das secoes ao rolar --------------------------------- */
   var aRevelar = document.querySelectorAll('.revela');
   if (semMovimento || !('IntersectionObserver' in window)) {

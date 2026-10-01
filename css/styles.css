@@ -292,13 +292,72 @@ a { color: inherit; }
 }
 .navegacao .nav-link:hover { color: var(--ameixa); }
 .navegacao .btn { margin-left: 8px; padding-inline: 20px; font-size: var(--fs-sm); }
-@media (max-width: 720px) {
-  .navegacao .nav-link { display: none; }
-  /* Na home o botao flutuante assume o WhatsApp; o header leva a Duvidas. */
-  .navegacao .nav-link--mobile { display: inline-flex; }
-  .navegacao .nav-btn--desktop { display: none; }
+
+/* Menu "hamburguer" (ate 860px). O botao so existe com JS; sem JS o header
+   mostra apenas o botao de WhatsApp. */
+.menu-botao {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--toque);
+  padding: 0 4px 0 14px;
+  margin-right: -4px;
+  background: none;
+  border: 0;
+  border-radius: var(--raio);
+  color: var(--tinta);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
 }
-@media (max-width: 360px) { .navegacao .btn { padding-inline: 14px; } }
+.menu-icone,
+.menu-icone::before,
+.menu-icone::after {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  transition: transform 200ms ease, background-color 200ms ease;
+}
+.menu-icone { position: relative; }
+.menu-icone::before,
+.menu-icone::after { content: ''; position: absolute; left: 0; }
+.menu-icone::before { top: -6px; }
+.menu-icone::after { top: 6px; }
+.cabecalho[data-menu='aberto'] .menu-icone { background: transparent; }
+.cabecalho[data-menu='aberto'] .menu-icone::before { transform: translateY(6px) rotate(45deg); }
+.cabecalho[data-menu='aberto'] .menu-icone::after { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .navegacao .nav-link { display: none; }
+
+  html.js .menu-botao { display: inline-flex; }
+  html.js .navegacao {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px var(--gutter) 24px;
+    background: var(--papel);
+    border-bottom: 1px solid var(--nevoa);
+    box-shadow: 0 16px 32px rgba(34, 26, 38, 0.08);
+  }
+  html.js .cabecalho[data-menu='aberto'] .navegacao { display: flex; }
+  html.js .navegacao .nav-link {
+    display: flex;
+    padding: 14px 0;
+    font-size: var(--fs-base);
+    color: var(--tinta);
+    border-bottom: 1px solid var(--nevoa);
+    border-radius: 0;
+  }
+  html.js .navegacao .btn { margin: 20px 0 0; font-size: var(--fs-base); }
+}
+@media (max-width: 360px) { html:not(.js) .navegacao .btn { padding-inline: 14px; } }
 
 /* --- 7. Secao 1: timbre (hero) ------------------------------------------ */
 .timbre {
