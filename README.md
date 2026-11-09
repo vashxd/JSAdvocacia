@@ -24,7 +24,7 @@ termos.html           Termos de uso + aviso do Provimento 205/2021
 css/styles.css        folha única, comentada por seção
 css/fonts.css         gerado por scripts/fetch-fonts.sh — não editar à mão
 js/main.js            reveal ao rolar, estado do header, formulário que abre o WhatsApp
-fonts/                Fraunces, Instrument Sans, IBM Plex Mono (woff2, 240 KB)
+fonts/                Playfair Display, Instrument Sans, IBM Plex Mono (woff2)
 img/                  retrato e foto de contexto (placeholders SVG), OG, ícone
 scripts/              utilitários de manutenção
 _headers              CSP e cache para Cloudflare Pages / Netlify

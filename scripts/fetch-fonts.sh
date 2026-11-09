@@ -6,7 +6,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
-URL="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,50,0&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400..600&display=swap"
+URL="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400..600&display=swap"
 
 raw=$(curl -sfL -m 30 -H "User-Agent: $UA" "$URL")
 mkdir -p fonts
@@ -20,11 +20,13 @@ for subset, body in blocks:
     if subset not in ("latin", "latin-ext"):
         continue
     fam = re.search(r"font-family: '([^']+)'", body).group(1)
+    style = re.search(r"font-style: (\w+);", body).group(1)
     wght = re.search(r"font-weight: ([^;]+);", body).group(1).strip()
     url = re.search(r"url\((https://[^)]+)\)", body).group(1)
     urange = re.search(r"unicode-range: ([^;]+);", body).group(1).strip()
     slug = fam.lower().replace(" ", "-")
-    name = f"{slug}-{subset}-{wght.replace(' ', '-')}.woff2"
+    sufixo = "-italic" if style == "italic" else ""
+    name = f"{slug}-{subset}-{wght.replace(' ', '-')}{sufixo}.woff2"
     path = os.path.join("fonts", name)
     if not os.path.exists(path):
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -34,7 +36,7 @@ for subset, body in blocks:
     out.append(
         "@font-face {\n"
         f"  font-family: '{fam}';\n"
-        "  font-style: normal;\n"
+        f"  font-style: {style};\n"
         f"  font-weight: {wght};\n"
         "  font-display: swap;\n"
         f"  src: url('../fonts/{name}') format('woff2');\n"
