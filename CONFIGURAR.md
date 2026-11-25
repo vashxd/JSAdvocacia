@@ -11,7 +11,7 @@ Todo dado de exemplo está marcado abaixo. `python scripts/verificar.py` lista o
 | `Rua Exemplo, 000, sala 00 — Centro, Manaus/AM` | rodapé, seção de contato, JSON-LD, páginas legais | Endereço real. Se não houver endereço fixo, usar apenas `Atendimento mediante agendamento` e remover `streetAddress`/`postalCode` do JSON-LD |
 | `69000-000` | JSON-LD em `index.html` | CEP real |
 | `Bacharel em Direito — Instituição, ano` | `index.html`, bloco "Credenciais" | Instituição e ano reais. **Só citar título de pós-graduação se estiver concluído** — título em andamento é informação inverídica |
-| `Segunda a sexta, das 9h às 18h` | seção de contato e `openingHoursSpecification` | Horário real |
+| ~~`Segunda a sexta, das 9h às 18h`~~ | seção de contato e `openingHoursSpecification` | ✔ 24 horas, todos os dias |
 
 ## 2. Contato
 

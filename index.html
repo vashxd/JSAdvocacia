@@ -341,7 +341,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></svg>
             <span>
               <span class="rotulo">Horário</span>
-              <span class="valor">Segunda a sábado, em horário combinado com você</span>
+              <span class="valor">24 horas, todos os dias da semana</span>
             </span>
           </div>
         </div>
@@ -460,6 +460,12 @@
     { "@type": "State", "name": "Amazonas" }
   ],
   "availableLanguage": "pt-BR",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  },
   "knowsAbout": [
     "Direito Penal",
     "Direito Processual Penal",
