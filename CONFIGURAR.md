@@ -42,7 +42,7 @@ O número de destino está no `action` do `<form>` em `index.html` (`https://wa.
 
 ## 4. Fotografia
 
-O retrato (`img/retrato-joyce.webp`, 800×1000) foi recortado de `opo1.jfif`. A foto de contexto (`img/contexto-mesa.webp`, 900×1200) é provisória: foto de Scott Graham no Unsplash (licença Unsplash, uso comercial livre, sem atribuição obrigatória — https://unsplash.com/photos/man-writing-on-paper-OQMZwNd3ThU). Depois da sessão de fotos:
+O retrato (`img/retrato-joyce.webp`, 800×1000) foi recortado de `op2.jfif`. A foto de contexto (`img/contexto-mesa.webp`, 900×1200) é provisória: foto de Scott Graham no Unsplash (licença Unsplash, uso comercial livre, sem atribuição obrigatória — https://unsplash.com/photos/man-writing-on-paper-OQMZwNd3ThU). Depois da sessão de fotos:
 
 1. Exportar em WebP (retrato ~800×1000, contexto ~600×800);
 2. Salvar como `img/retrato-joyce.webp` e `img/contexto-mesa.webp`;
