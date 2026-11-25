@@ -11,3 +11,6 @@ Desktop.ini
 # Temporários
 *.log
 _*.html
+
+# Cache do wrangler (Cloudflare)
+.wrangler/
