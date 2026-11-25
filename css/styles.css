@@ -1,28 +1,37 @@
 /* ==========================================================================
    Joyce Santos, Advogada Criminalista — folha de estilo unica
-   Conceito: "Toga" (tema D3, bordo noite). Faixas escuras em bordo com
-   textura de veludo (topo, contato) e secoes de leitura em marfim.
+   Identidade 2026: Grafite + Bordo + Dourado + Marfim + Pedra.
+   Faixas escuras em grafite (topo, contato), secoes de leitura em marfim,
+   bordo nos botoes/destaques e dourado so em detalhes e linhas.
+   Proporcao: 60% grafite ou marfim, 25% texto, 10% bordo, 5% dourado.
+   Regra: nunca dourado em texto pequeno sobre marfim.
    Ordem: tokens > reset > tipografia > margem > header > secoes > rodape.
    ========================================================================== */
 
 /* --- 1. Tokens ---------------------------------------------------------- */
 :root {
-  /* Paleta "Toga / bordo noite" */
-  --tinta:  #1E1414;   /* texto principal sobre claro */
-  --bordo:  #2F090E;   /* cor da marca: faixas escuras, titulos */
-  --bordo-2:#45121A;   /* hover / superficie levemente mais clara */
-  --noite:  #1A0508;   /* rodape */
-  --latao:  #A87C3E;   /* filetes e detalhes decorativos sobre claro */
-  --ouro:   #D9B47E;   /* destaque sobre bordo (botoes, rotulos) — 9:1 */
-  --ouro-texto: #7E5A26; /* rotulos pequenos sobre marfim — 5,6:1 */
-  --papel:  #F5F0E8;   /* marfim */
-  --nevoa:  #DCCFC2;   /* divisorias sobre marfim */
-  --carvao: #4D3F3D;   /* texto secundario sobre marfim — 9:1 */
+  /* Paleta oficial */
+  --grafite: #14161A;  /* principal / fundos escuros */
+  --bordo:   #6B1E2B;  /* destaque / botoes / titulos de area — 10:1 sobre marfim */
+  --bordo-2: #82293A;  /* hover do bordo */
+  --dourado: #B08D57;  /* detalhes e linhas — 6:1 sobre grafite; nunca texto pequeno sobre marfim */
+  --papel:   #F4F1EA;  /* marfim: fundo claro */
+  --pedra:   #5E5A55;  /* textos secundarios — 6,2:1 sobre marfim */
 
-  /* Texto sobre bordo */
-  --sobre-escuro: #E6D6CC;
+  /* Derivados */
+  --tinta:  var(--grafite);  /* texto principal sobre claro */
+  --noite:  #0D0E11;         /* rodape, um tom abaixo do grafite */
+  --latao:  var(--dourado);  /* filetes sobre claro */
+  --ouro:   var(--dourado);  /* destaques sobre grafite */
+  --ouro-texto: var(--bordo);/* rotulos pequenos sobre marfim */
+  --carvao: var(--pedra);
+  --nevoa:  #D6D0C4;         /* divisorias sobre marfim */
+  --papel-2: #EBE6DB;        /* faixa discreta sobre marfim */
+
+  /* Texto sobre grafite */
+  --sobre-escuro: #CFC9BE;
   --erro: #F4C2AC;
-  --papel-fraco: rgba(245, 240, 232, 0.72);
+  --papel-fraco: rgba(244, 241, 234, 0.72);
 
   /* Texturas (so gradientes: nada de imagem externa) */
   --veludo:
@@ -30,7 +39,7 @@
     radial-gradient(ellipse 60% 70% at 85% 85%, rgba(0,0,0,0.25), transparent 70%),
     repeating-linear-gradient(118deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 40px),
     repeating-linear-gradient(32deg, rgba(0,0,0,0.06) 0 1px, transparent 1px 74px);
-  --grao: radial-gradient(rgba(60,10,16,0.035) 1px, transparent 1px);
+  --grao: radial-gradient(rgba(20,22,26,0.03) 1px, transparent 1px);
 
   /* Tipografia — base 18px, razao 1.25 */
   --fs-xs:   0.78rem;
@@ -42,9 +51,11 @@
   --fs-3xl:  2.44rem;
   --fs-4xl:  3.05rem;
 
-  --display: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --corpo:   'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --mono:    'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  /* Titulos: Cormorant Garamond 500 (italico para a enfase).
+     Textos: Jost 300 corrido, 400 legendas, 500 rotulos em caixa alta. */
+  --display: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+  --corpo:   'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --rotulo-espaco: 0.2em;
 
   /* Ritmo */
   --medida: 68ch;          /* medida de linha maxima */
@@ -72,6 +83,7 @@ body {
   color: var(--tinta);
   font-family: var(--corpo);
   font-size: var(--fs-base);
+  font-weight: 300;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -85,15 +97,18 @@ main { flex: 1 0 auto; }
 /* --- 3. Tipografia ------------------------------------------------------ */
 h1, h2, h3 {
   font-family: var(--display);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: 0;
   text-wrap: balance;
 }
-h1 { font-size: clamp(2.15rem, 1.4rem + 3.4vw, 3.35rem); line-height: 1.06; }
-h2 { font-size: clamp(1.7rem, 1.3rem + 1.8vw, 2.33rem); color: var(--bordo); }
-h3 { font-size: var(--fs-lg); color: var(--bordo); }
+/* Cormorant tem olho pequeno: tamanhos ~15% maiores que um serif comum */
+h1 { font-size: clamp(2.5rem, 1.55rem + 4.1vw, 4rem); line-height: 1.04; }
+h2 { font-size: clamp(2rem, 1.5rem + 2.1vw, 2.8rem); color: var(--grafite); }
+h3 { font-size: var(--fs-xl); color: var(--grafite); }
 h1 em, h2 em { font-style: italic; font-weight: 500; }
+h2 em { color: var(--bordo); }
+strong, b { font-weight: 500; }
 p  { max-width: var(--medida); text-wrap: pretty; }
 
 a { color: inherit; }
@@ -110,21 +125,22 @@ a { color: inherit; }
 }
 .link:hover { background-size: 100% 2px; }
 
-/* Rotulo utilitario em mono — a "referencia" da peca juridica */
+/* Rotulo: Jost Medium em caixa alta com letras espacadas */
 .rotulo {
-  font-family: var(--mono);
+  font-family: var(--corpo);
   font-size: var(--fs-xs);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--rotulo-espaco);
   color: var(--ouro-texto);
 }
 
 .intro { font-size: var(--fs-lg); color: var(--carvao); line-height: 1.55; }
 
-/* Foco visivel em latao, em qualquer elemento (guia 6.5) */
+/* Foco visivel: bordo sobre marfim (dourado nao tem 3:1 ali);
+   as faixas escuras trocam para dourado. */
 :focus-visible {
-  outline: 2px solid var(--latao);
+  outline: 2px solid var(--bordo);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -135,7 +151,7 @@ a { color: inherit; }
   left: -9999px;
   top: 0;
   z-index: 100;
-  background: var(--bordo);
+  background: var(--grafite);
   color: var(--papel);
   padding: 12px 20px;
 }
@@ -189,7 +205,7 @@ a { color: inherit; }
 }
 .secao > .envelope { position: relative; }
 
-/* Cabecalho de secao: rotulo em mono precedido do filete de 32px
+/* Cabecalho de secao: rotulo (Jost caixa alta) precedido do filete de 32px
    (no mobile o filete e a unica sobra da margem vertical). */
 .secao-cabeca { margin-bottom: 48px; }
 .secao-cabeca .rotulo { display: block; margin-bottom: 12px; }
@@ -218,37 +234,38 @@ a { color: inherit; }
   padding: 12px 26px;
   border: 1px solid transparent;
   border-radius: var(--raio);
-  font-size: var(--fs-base);
-  font-weight: 600;
-  letter-spacing: 0.005em;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 120ms ease;
 }
 .btn svg { width: 20px; height: 20px; flex: none; }
 
-/* Primario = ouro sobre as faixas escuras (header, topo, contato) */
+/* Primario = bordo (cor de botoes da identidade), texto marfim — 10:1 */
 .btn--primario {
-  background: var(--ouro);
-  color: var(--noite);
-  border-color: var(--ouro);
+  background: var(--bordo);
+  color: var(--papel);
+  border-color: var(--bordo);
 }
-.btn--primario:hover { background: var(--papel); border-color: var(--papel); }
+.btn--primario:hover { background: var(--bordo-2); border-color: var(--dourado); }
 
 /* Secundario: contorno claro, usado sobre bordo */
 .btn--secundario {
   background: transparent;
   color: var(--papel);
-  border-color: rgba(245, 240, 232, 0.5);
+  border-color: rgba(244, 241, 234, 0.45);
 }
 .btn--secundario:hover { border-color: var(--ouro); color: var(--ouro); }
 
 .btn--claro {
-  background: var(--ouro);
-  color: var(--noite);
-  border-color: var(--ouro);
+  background: var(--bordo);
+  color: var(--papel);
+  border-color: var(--bordo);
 }
-.btn--claro:hover { background: transparent; color: var(--ouro); border-color: var(--ouro); }
+.btn--claro:hover { background: var(--bordo-2); border-color: var(--dourado); }
 
 .btn:active { transform: translateY(1px); }
 
@@ -260,10 +277,10 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(47, 9, 14, 0.96);
+  background: rgba(20, 22, 26, 0.96);
   backdrop-filter: blur(8px);
   color: var(--papel);
-  border-bottom: 1px solid rgba(217, 180, 126, 0.22);
+  border-bottom: 1px solid rgba(176, 141, 87, 0.28);
   transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 .cabecalho[data-rolado='true'] {
@@ -284,7 +301,7 @@ a { color: inherit; }
   gap: 12px;
   text-decoration: none;
   font-family: var(--display);
-  font-size: var(--fs-lg);
+  font-size: var(--fs-xl);
   font-weight: 500;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -300,12 +317,13 @@ a { color: inherit; }
   align-items: center;
   text-decoration: none;
   font-size: var(--fs-sm);
-  color: #EADFD2;
+  font-weight: 400;
+  color: var(--sobre-escuro);
   border-radius: var(--raio);
   transition: color 200ms ease;
 }
 .navegacao .nav-link:hover { color: var(--ouro); }
-.navegacao .btn { margin-left: 8px; padding-inline: 20px; font-size: var(--fs-sm); }
+.navegacao .btn { margin-left: 8px; padding-inline: 20px; font-size: var(--fs-xs); }
 
 /* Menu "hamburguer" (ate 860px). O botao so existe com JS; sem JS o header
    mostra apenas o botao de WhatsApp. */
@@ -320,8 +338,10 @@ a { color: inherit; }
   border: 0;
   border-radius: var(--raio);
   color: var(--papel);
-  font-size: var(--fs-sm);
-  font-weight: 600;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--rotulo-espaco);
   cursor: pointer;
 }
 .menu-icone,
@@ -356,8 +376,8 @@ a { color: inherit; }
     align-items: stretch;
     gap: 0;
     padding: 4px var(--gutter) 24px;
-    background: var(--bordo);
-    border-bottom: 1px solid rgba(217, 180, 126, 0.22);
+    background: var(--grafite);
+    border-bottom: 1px solid rgba(176, 141, 87, 0.28);
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
   }
   html.js .cabecalho[data-menu='aberto'] .navegacao { display: flex; }
@@ -366,10 +386,10 @@ a { color: inherit; }
     padding: 14px 0;
     font-size: var(--fs-base);
     color: var(--papel);
-    border-bottom: 1px solid rgba(245, 240, 232, 0.14);
+    border-bottom: 1px solid rgba(244, 241, 234, 0.14);
     border-radius: 0;
   }
-  html.js .navegacao .btn { margin: 20px 0 0; font-size: var(--fs-base); }
+  html.js .navegacao .btn { margin: 20px 0 0; font-size: var(--fs-sm); }
 }
 @media (max-width: 360px) { html:not(.js) .navegacao .btn { padding-inline: 14px; } }
 
@@ -377,7 +397,7 @@ a { color: inherit; }
 .timbre {
   border-top: 0;
   padding-block: clamp(48px, 8vw, 96px) clamp(64px, 10vw, 112px);
-  background-color: var(--bordo);
+  background-color: var(--grafite);
   background-image: var(--veludo);
   color: var(--papel);
 }
@@ -457,8 +477,8 @@ a { color: inherit; }
 }
 .area h3 { margin-top: 2px; }
 .area p { color: var(--carvao); }
-.area .num { font-family: var(--mono); font-size: var(--fs-xs); color: var(--ouro-texto); letter-spacing: 0.08em; }
-.area h3 { font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.4rem); }
+.area .num { font-family: var(--corpo); font-size: var(--fs-xs); font-weight: 500; color: var(--ouro-texto); letter-spacing: var(--rotulo-espaco); }
+.area h3 { font-size: clamp(1.5rem, 1.3rem + 0.6vw, 1.7rem); }
 /* Situacoes: lista de texto, nao pilulas (pilula parece botao) */
 .area-lista { display: grid; gap: 4px; padding-top: 2px; }
 .area-lista li { position: relative; padding-left: 22px; }
@@ -478,7 +498,7 @@ a { color: inherit; }
   align-items: center;
   gap: 8px;
   min-height: var(--toque);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--bordo);
   text-decoration: underline;
   text-decoration-color: var(--latao);
@@ -496,15 +516,15 @@ a { color: inherit; }
   position: relative;
   margin-top: 28px;
   padding: 24px clamp(22px, 3vw, 34px);
-  background: #ECE3D6;
+  background: var(--papel-2);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 28px;
 }
-.outras-areas h3 { font-size: var(--fs-base); flex: 0 0 auto; }
+.outras-areas h3 { font-size: var(--fs-lg); flex: 0 0 auto; }
 .outras-areas p { color: var(--carvao); flex: 1 1 320px; }
-.outras-areas strong { color: var(--bordo); font-weight: 600; }
+.outras-areas strong { color: var(--bordo); font-weight: 500; }
 .outras-areas .area-link { margin-top: 0; padding-top: 0; }
 
 /* --- 9. Secao 3: sobre -------------------------------------------------- */
@@ -525,8 +545,8 @@ a { color: inherit; }
   gap: 18px;
 }
 .credenciais div { display: grid; gap: 2px; }
-.credenciais dt { font-family: var(--mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ouro-texto); }
-.credenciais dd { font-size: var(--fs-base); }
+.credenciais dt { font-family: var(--corpo); font-size: var(--fs-xs); font-weight: 500; text-transform: uppercase; letter-spacing: var(--rotulo-espaco); color: var(--ouro-texto); }
+.credenciais dd { font-size: var(--fs-base); font-weight: 400; }
 @media (min-width: 700px) { .credenciais { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 860px) {
   .sobre .envelope { grid-template-columns: 1fr; }
@@ -549,15 +569,16 @@ a { color: inherit; }
   background: var(--latao);
 }
 .etapa .num {
-  font-family: var(--mono);
-  font-size: var(--fs-sm);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: var(--fs-2xl);
   font-weight: 500;
-  color: var(--ouro-texto);
-  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--bordo);
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
-.etapa h3 { font-size: var(--fs-base); font-weight: 600; font-family: var(--corpo); letter-spacing: 0; color: var(--tinta); }
+.etapa h3 { font-size: var(--fs-base); font-weight: 500; font-family: var(--corpo); letter-spacing: 0; color: var(--tinta); }
 .etapa p { margin-top: 10px; color: var(--carvao); }
 
 /* --- 11. Secao 5: FAQ --------------------------------------------------- */
@@ -582,7 +603,7 @@ a { color: inherit; }
   padding: 20px 4px;
   cursor: pointer;
   font-size: var(--fs-base);
-  font-weight: 600;
+  font-weight: 400;
   list-style: none;
   transition: color 200ms ease;
 }
@@ -609,7 +630,7 @@ a { color: inherit; }
 
 /* --- 12. Secao 6: contato ---------------------------------------------- */
 .contato {
-  background-color: var(--bordo);
+  background-color: var(--grafite);
   background-image: var(--veludo);
   color: var(--papel);
   border-top: 0;
@@ -634,33 +655,34 @@ a { color: inherit; }
   gap: 16px;
   align-items: start;
   padding: 18px 0;
-  border-bottom: 1px solid rgba(245, 240, 232, 0.16);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.14);
   text-decoration: none;
 }
-.canal:first-child { border-top: 1px solid rgba(245, 240, 232, 0.16); }
+.canal:first-child { border-top: 1px solid rgba(244, 241, 234, 0.14); }
 .canal svg { width: 22px; height: 22px; color: var(--ouro); margin-top: 3px; }
 .canal .rotulo { display: block; margin-bottom: 2px; }
-.canal .valor { font-size: var(--fs-base); }
+.canal .valor { font-size: var(--fs-base); font-weight: 400; }
 a.canal:hover .valor { text-decoration: underline; text-decoration-color: var(--ouro); text-underline-offset: 4px; }
 .contato .acoes { margin-top: 30px; }
 
 /* Formulario: mesma cabeca da coluna esquerda, para alinhar com o h2 */
 .secao-cabeca--form { margin-bottom: 26px; }
-.secao-cabeca--form h3 { font-size: var(--fs-xl); }
+.secao-cabeca--form h3 { font-size: var(--fs-2xl); }
 .formulario { display: grid; gap: 20px; }
 .campo { display: grid; gap: 8px; }
-/* Rotulos dos campos em mono. */
-.campo > label { font-family: var(--mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; color: rgba(245, 240, 232, 0.8); }
+/* Rotulos dos campos: Jost Medium espacado. */
+.campo > label { font-family: var(--corpo); font-size: var(--fs-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(244, 241, 234, 0.8); }
 .campo label .req { color: var(--ouro); }
 .campo input, .campo select {
   min-height: var(--toque);
   width: 100%;
   padding: 12px 14px;
-  background: rgba(245, 240, 232, 0.06);
-  border: 1px solid rgba(245, 240, 232, 0.5); /* contorno sobre --bordo */
+  background: rgba(244, 241, 234, 0.05);
+  border: 1px solid rgba(244, 241, 234, 0.42); /* contorno sobre --grafite */
   border-radius: var(--raio);
   color: var(--papel);
   font-size: var(--fs-base);
+  font-weight: 400;
   transition: border-color 200ms ease, background-color 200ms ease;
 }
 .campo select {
@@ -672,21 +694,22 @@ a.canal:hover .valor { text-decoration: underline; text-decoration-color: var(--
   padding-right: 38px;
   text-overflow: ellipsis;
 }
-.campo select option { background: var(--bordo); color: var(--papel); }
-.campo input::placeholder { color: rgba(245, 240, 232, 0.62); } /* ~6:1 sobre --bordo */
-.campo input:hover, .campo select:hover { border-color: rgba(245, 240, 232, 0.72); }
-.campo input:focus, .campo select:focus { background: rgba(245, 240, 232, 0.1); border-color: var(--ouro); }
+.campo select option { background: var(--grafite); color: var(--papel); }
+.campo input::placeholder { color: rgba(244, 241, 234, 0.55); } /* ~7:1 sobre --grafite */
+.campo input:hover, .campo select:hover { border-color: rgba(244, 241, 234, 0.7); }
+.campo input:focus, .campo select:focus { background: rgba(244, 241, 234, 0.08); border-color: var(--ouro); }
 .campo .erro { font-size: var(--fs-sm); color: var(--erro); }
 .campo .erro:empty { display: none; }
 .campo[data-invalido='true'] input, .campo[data-invalido='true'] select { border-color: var(--erro); }
 
-.nota-form { font-size: var(--fs-sm); color: rgba(245, 240, 232, 0.7); max-width: 48ch; }
+.nota-form { font-size: var(--fs-sm); color: rgba(244, 241, 234, 0.7); max-width: 48ch; }
 
 /* --- 13. Rodape --------------------------------------------------------- */
 .rodape {
   background: var(--noite);
-  color: rgba(245, 240, 232, 0.74);
+  color: rgba(244, 241, 234, 0.74);
   padding-block: 56px 44px;
+  border-top: 1px solid rgba(176, 141, 87, 0.35);
   font-size: var(--fs-sm);
 }
 .rodape a { color: var(--papel); }
@@ -697,19 +720,19 @@ a.canal:hover .valor { text-decoration: underline; text-decoration-color: var(--
   justify-content: space-between;
   align-items: baseline;
   padding-bottom: 28px;
-  border-bottom: 1px solid rgba(245, 240, 232, 0.14);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.14);
 }
-.rodape-nome { font-family: var(--display); font-size: var(--fs-lg); color: var(--papel); }
+.rodape-nome { font-family: var(--display); font-size: var(--fs-xl); font-weight: 500; color: var(--papel); }
 .rodape-links { display: flex; flex-wrap: wrap; gap: 4px 20px; }
 .rodape-links a { text-decoration: none; display: inline-flex; align-items: center; min-height: var(--toque); }
 .rodape-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.rodape-dados { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 26px; font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.04em; }
+.rodape-dados { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 26px; font-family: var(--corpo); font-size: var(--fs-xs); font-weight: 400; text-transform: uppercase; letter-spacing: 0.12em; }
 .rodape-dados span + span::before { content: '\00B7'; margin-right: 16px; color: var(--ouro); }
 @media (max-width: 720px) {
   .rodape-dados { flex-direction: column; }
   .rodape-dados span + span::before { display: none; }
 }
-.rodape-aviso { margin-top: 22px; max-width: 78ch; font-size: var(--fs-xs); line-height: 1.6; color: rgba(245, 240, 232, 0.58); }
+.rodape-aviso { margin-top: 22px; max-width: 78ch; font-size: var(--fs-xs); line-height: 1.6; color: rgba(244, 241, 234, 0.58); }
 
 /* --- 14. Botao flutuante de WhatsApp (mobile) --------------------------- */
 .zap-flutuante {
@@ -726,9 +749,9 @@ a.canal:hover .valor { text-decoration: underline; text-decoration-color: var(--
   background: var(--bordo);
   color: var(--papel);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   font-size: var(--fs-sm);
-  box-shadow: 0 6px 24px rgba(30, 8, 12, 0.28);
+  box-shadow: 0 6px 24px rgba(20, 22, 26, 0.3);
   transition: opacity 200ms ease, visibility 200ms ease;
 }
 .zap-flutuante svg { width: 22px; height: 22px; }
@@ -740,8 +763,8 @@ a.canal:hover .valor { text-decoration: underline; text-decoration-color: var(--
 .prosa { padding-block: 64px 80px; }
 .prosa .envelope > * { max-width: 46rem; }
 .prosa h1 { margin-bottom: 14px; }
-.prosa h2 { font-size: var(--fs-xl); margin-top: 48px; margin-bottom: 14px; }
-.prosa h3 { margin-top: 30px; margin-bottom: 8px; font-size: var(--fs-base); font-family: var(--corpo); font-weight: 600; letter-spacing: 0; }
+.prosa h2 { font-size: var(--fs-2xl); margin-top: 48px; margin-bottom: 14px; }
+.prosa h3 { margin-top: 30px; margin-bottom: 8px; font-size: var(--fs-base); font-family: var(--corpo); font-weight: 500; letter-spacing: 0; }
 .prosa p, .prosa li { color: var(--carvao); }
 .prosa p + p, .prosa ul, .prosa ol { margin-top: 14px; }
 .prosa ul + p, .prosa ol + p { margin-top: 20px; }
@@ -759,11 +782,12 @@ a.canal:hover .valor { text-decoration: underline; text-decoration-color: var(--
   content: counter(item, decimal-leading-zero);
   position: absolute;
   left: 0; top: 0.1em;
-  font-family: var(--mono);
+  font-family: var(--corpo);
   font-size: var(--fs-xs);
-  color: var(--latao);
+  font-weight: 500;
+  color: var(--bordo);
 }
-.prosa .atualizado { font-family: var(--mono); font-size: var(--fs-xs); color: var(--carvao); text-transform: uppercase; letter-spacing: 0.08em; }
+.prosa .atualizado { font-family: var(--corpo); font-size: var(--fs-xs); font-weight: 500; color: var(--carvao); text-transform: uppercase; letter-spacing: var(--rotulo-espaco); }
 .voltar { display: inline-flex; align-items: center; gap: 8px; min-height: var(--toque); text-decoration: none; font-size: var(--fs-sm); color: var(--carvao); }
 .voltar:hover { color: var(--bordo); }
 .voltar-linha { margin-top: 44px; }

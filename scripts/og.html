@@ -9,48 +9,49 @@
   * { box-sizing: border-box; margin: 0; }
   html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
-    background-color: #2F090E;
+    background-color: #14161A;
     background-image: radial-gradient(ellipse 70% 55% at 25% 15%, rgba(255,255,255,0.055), transparent 70%), radial-gradient(ellipse 60% 70% at 85% 85%, rgba(0,0,0,0.25), transparent 70%), repeating-linear-gradient(118deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 40px);
-    color: #F5F0E8;
-    font-family: 'Instrument Sans', system-ui, sans-serif;
+    color: #F4F1EA;
+    font-family: 'Jost', system-ui, sans-serif;
+    font-weight: 300;
     padding: 76px 88px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
   }
-  .barra { position: absolute; inset-block: 0; left: 44px; width: 2px; background: #D9B47E; opacity: 0.6; }
-  .selo { position: absolute; right: 88px; top: 76px; width: 150px; height: 150px; color: #D9B47E; }
+  .barra { position: absolute; inset-block: 0; left: 44px; width: 2px; background: #B08D57; opacity: 0.7; }
+  .selo { position: absolute; right: 88px; top: 76px; width: 150px; height: 150px; color: #B08D57; }
   .rotulo {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 21px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: #D9B47E;
+    font-family: 'Jost', sans-serif; font-weight: 500;
+    font-size: 20px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: #B08D57;
   }
   h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 600;
-    font-size: 78px;
-    line-height: 1.06;
-    letter-spacing: -0.02em;
+    font-family: 'Cormorant Garamond', Garamond, serif;
+    font-weight: 500;
+    font-size: 88px;
+    line-height: 1.02;
+    letter-spacing: 0;
     max-width: 16ch;
     margin-top: 30px;
   }
-  .filete { width: 120px; height: 3px; background: #D9B47E; margin: 34px 0 26px; }
-  p { font-size: 27px; color: #E6D6CC; max-width: 44ch; line-height: 1.45; }
+  .filete { width: 120px; height: 3px; background: #6B1E2B; margin: 34px 0 26px; }
+  p { font-size: 27px; color: #CFC9BE; max-width: 44ch; line-height: 1.45; }
   footer {
     display: flex; justify-content: space-between; align-items: baseline;
-    font-family: 'IBM Plex Mono', monospace; font-size: 21px; letter-spacing: 0.06em;
-    color: rgba(245,240,232,0.7);
-    border-top: 1px solid rgba(217,180,126,0.3); padding-top: 24px;
+    font-family: 'Jost', sans-serif; font-weight: 500; font-size: 19px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(244,241,234,0.7);
+    border-top: 1px solid rgba(176,141,87,0.35); padding-top: 24px;
   }
 </style>
 </head>
 <body>
   <div class="barra"></div>
-  <svg class="selo" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="currentColor" stroke-width="0.8"/><circle cx="22" cy="22" r="17" fill="none" stroke="currentColor" stroke-width="0.4"/><text x="22" y="28" text-anchor="middle" font-family="Playfair Display, serif" font-size="17" font-weight="600" fill="currentColor">JS</text></svg>
+  <svg class="selo" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20.5" fill="none" stroke="currentColor" stroke-width="0.8"/><circle cx="22" cy="22" r="17" fill="none" stroke="currentColor" stroke-width="0.4"/><text x="22" y="28" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="19" font-weight="600" fill="currentColor">JS</text></svg>
   <div>
     <div class="rotulo">Joyce Santos · Advogada criminalista</div>
-    <h1>Defesa criminal técnica, <em style="font-weight:500;color:#D9B47E">do inquérito ao último recurso.</em></h1>
+    <h1>Defesa criminal técnica, <em style="font-weight:500;color:#B08D57">do inquérito ao último recurso.</em></h1>
     <div class="filete"></div>
     <p>Direito Penal e Processo Penal — em Manaus e online.</p>
   </div>
